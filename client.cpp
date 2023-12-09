@@ -45,3 +45,21 @@ void createKeyboard(const vector<vector<string>>& buttonLayout, ReplyKeyboardMar
         kb->keyboard.push_back(row);
     }
 }
+
+string GetInfoCmd()
+{
+    std::string line;
+    std::string info;
+
+    std::ifstream in("m.txt");
+    if (in.is_open()) {
+        while (std::getline(in, line))
+        {
+            info += line;
+            info += "\n";
+        }
+    }
+    in.close();
+
+    return info;
+}
