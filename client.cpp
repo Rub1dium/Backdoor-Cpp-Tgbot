@@ -8,6 +8,7 @@
 #include <direct.h>
 #include <cstdio>
 #include <iostream>
+#include <locale>
 
 #include <filesystem>
 #include <typeinfo>
@@ -50,6 +51,8 @@ string GetInfoCmd()
 {
     std::string line;
     std::string info;
+
+    SetConsoleOutputCP(CP_UTF8);
 
     std::ifstream in("m.txt");
     if (in.is_open()) {
